@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, Wifi, BarChart3, Users, Zap, Shield, Sparkles, Play, LogOut, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/features/authentication/hooks/useAuth';
 
 const Index = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -20,12 +20,12 @@ const Index = () => {
       {/* Animated Background */}
       <div className="fixed inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-pink-900/20" />
-        
+
         {/* Floating Orbs */}
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute top-3/4 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
         <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-pink-500/10 rounded-full blur-3xl animate-pulse delay-2000" />
-        
+
         {/* Grid Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
       </div>
@@ -50,9 +50,9 @@ const Index = () => {
                     <User className="w-4 h-4" />
                     <span>{user.email}</span>
                   </div>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={handleSignOut}
                     className="text-gray-300 hover:text-white"
                   >
@@ -92,24 +92,24 @@ const Index = () => {
               <Sparkles className="w-3 h-3 mr-2" />
               Now with AI-powered insights
             </Badge>
-            
+
             <h1 className="text-5xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
-              Transform WiFi into 
+              Transform WiFi into
               <span className="bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent block">
                 Marketing Gold
               </span>
             </h1>
-            
+
             <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Turn every WiFi connection into a lead. Track visitor behavior, create targeted campaigns, 
+              Turn every WiFi connection into a lead. Track visitor behavior, create targeted campaigns,
               and grow your business with powerful analytics.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               {user ? (
                 <Link to="/dashboard">
-                  <Button 
-                    size="lg" 
+                  <Button
+                    size="lg"
                     className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-lg px-8 py-6 group"
                   >
                     Go to Dashboard
@@ -118,8 +118,8 @@ const Index = () => {
                 </Link>
               ) : (
                 <Link to="/auth">
-                  <Button 
-                    size="lg" 
+                  <Button
+                    size="lg"
                     className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-lg px-8 py-6 group"
                   >
                     Start Free Trial
@@ -127,10 +127,10 @@ const Index = () => {
                   </Button>
                 </Link>
               )}
-              
-              <Button 
-                variant="outline" 
-                size="lg" 
+
+              <Button
+                variant="outline"
+                size="lg"
                 className="border-white/20 text-white hover:bg-white/10 text-lg px-8 py-6 group"
                 onClick={() => setIsPlaying(!isPlaying)}
               >
@@ -153,7 +153,7 @@ const Index = () => {
               Powerful features designed to turn your WiFi network into a customer acquisition machine.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
@@ -193,8 +193,8 @@ const Index = () => {
                 gradient: "from-pink-500 to-violet-500"
               }
             ].map((feature, index) => (
-              <Card 
-                key={index} 
+              <Card
+                key={index}
                 className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 group"
               >
                 <CardHeader>
@@ -247,8 +247,8 @@ const Index = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {user ? (
               <Link to="/dashboard">
-                <Button 
-                  size="lg" 
+                <Button
+                  size="lg"
                   className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-lg px-8 py-6 group"
                 >
                   Enter Dashboard
@@ -257,8 +257,8 @@ const Index = () => {
               </Link>
             ) : (
               <Link to="/auth">
-                <Button 
-                  size="lg" 
+                <Button
+                  size="lg"
                   className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-lg px-8 py-6 group"
                 >
                   Enter Dashboard
@@ -266,9 +266,9 @@ const Index = () => {
                 </Button>
               </Link>
             )}
-            <Button 
-              variant="outline" 
-              size="lg" 
+            <Button
+              variant="outline"
+              size="lg"
               className="border-white/20 text-white hover:bg-white/10 text-lg px-8 py-6"
             >
               Contact Sales

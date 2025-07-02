@@ -5,13 +5,14 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CalendarDays, Users, Wifi, LayoutDashboard, ArrowLeft, LogOut, User } from 'lucide-react';
-import { MetricsCards } from '@/components/dashboard/MetricsCards';
-import { VisitorsChart } from '@/components/dashboard/VisitorsChart';
-import { ConversionChart } from '@/components/dashboard/ConversionChart';
-import { CampaignManager } from '@/components/campaigns/CampaignManager';
-import { DateRangeFilter } from '@/components/dashboard/DateRangeFilter';
+import { MetricsCards } from './MetricsCards';
+import { VisitorsChart } from './VisitorsChart';
+import { ConversionChart } from './ConversionChart';
+import { CampaignManager } from '../../campaigns/components/CampaignManager';
+import { DateRangeFilter } from './DateRangeFilter';
 import { Link } from 'react-router-dom';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/features/authentication/hooks/useAuth';
+import { toast } from '@/components/ui/use-toast';
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -19,7 +20,15 @@ const Dashboard = () => {
   const { user, signOut } = useAuth();
 
   const handleSignOut = async () => {
-    await signOut();
+    try {
+      await signOut();
+    } catch (error) {
+      toast({
+        title: error instanceof Error ? error.message : 'Failed to sign out',
+        description: 'Failed to sign out',
+        variant: 'destructive',
+      });
+    }
   };
 
   return (
@@ -53,9 +62,9 @@ const Dashboard = () => {
                   <span>{user.email}</span>
                 </div>
               )}
-              <Button 
-                variant="outline" 
-                size="sm" 
+              <Button
+                variant="outline"
+                size="sm"
                 onClick={handleSignOut}
                 className="flex items-center space-x-2"
               >
@@ -89,7 +98,7 @@ const Dashboard = () => {
           <TabsContent value="dashboard" className="space-y-6">
             {/* Metrics Cards */}
             <MetricsCards dateRange={dateRange} />
-            
+
             {/* Charts Section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card className="col-span-1 bg-white/70 backdrop-blur-sm border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300">
@@ -129,10 +138,9 @@ const Dashboard = () => {
                   ].map((activity, index) => (
                     <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors">
                       <div className="flex items-center space-x-3">
-                        <div className={`w-2 h-2 rounded-full ${
-                          activity.status === 'success' ? 'bg-green-500' :
+                        <div className={`w-2 h-2 rounded-full ${activity.status === 'success' ? 'bg-green-500' :
                           activity.status === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'
-                        }`}></div>
+                          }`}></div>
                         <div>
                           <p className="text-sm font-medium text-slate-900">{activity.action}</p>
                           <p className="text-xs text-slate-500">{activity.user}</p>

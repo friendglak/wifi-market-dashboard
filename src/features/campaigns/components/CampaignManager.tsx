@@ -9,10 +9,21 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Plus, BarChart3, Users, Calendar } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/shared/hooks/use-toast';
 
 export const CampaignManager = () => {
-  const [campaigns, setCampaigns] = useState([
+  interface Campaign {
+    id: number;
+    name: string;
+    description: string;
+    status: 'active' | 'paused' | 'ended';
+    type: 'promotion' | 'newsletter' | 'survey';
+    clicks: number;
+    conversions: number;
+    created: string;
+  }
+
+  const [campaigns, setCampaigns] = useState<Campaign[]>([
     {
       id: 1,
       name: 'Summer WiFi Promotion',
@@ -46,7 +57,11 @@ export const CampaignManager = () => {
   ]);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [newCampaign, setNewCampaign] = useState({
+  const [newCampaign, setNewCampaign] = useState<{
+    name: string;
+    description: string;
+    type: 'promotion' | 'newsletter' | 'survey';
+  }>({
     name: '',
     description: '',
     type: 'promotion'
@@ -64,12 +79,12 @@ export const CampaignManager = () => {
       return;
     }
 
-    const campaign = {
-      id: campaigns.length + 1,
+    const campaign: Campaign = {
+      id: Date.now(), // or use crypto.randomUUID() for better uniqueness
       name: newCampaign.name,
       description: newCampaign.description,
       status: 'active',
-      type: newCampaign.type,
+      type: newCampaign.type as 'promotion' | 'newsletter' | 'survey',
       clicks: 0,
       conversions: 0,
       created: new Date().toISOString().split('T')[0]
@@ -78,7 +93,7 @@ export const CampaignManager = () => {
     setCampaigns([...campaigns, campaign]);
     setNewCampaign({ name: '', description: '', type: 'promotion' });
     setIsDialogOpen(false);
-    
+
     toast({
       title: "Campaign Created",
       description: "Your new campaign has been created successfully.",
@@ -117,7 +132,7 @@ export const CampaignManager = () => {
           <h2 className="text-2xl font-bold text-slate-900">Campaign Management</h2>
           <p className="text-slate-600">Create and manage your WiFi marketing campaigns</p>
         </div>
-        
+
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700">
@@ -154,7 +169,7 @@ export const CampaignManager = () => {
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="type">Campaign Type</Label>
-                <Select value={newCampaign.type} onValueChange={(value) => setNewCampaign({ ...newCampaign, type: value })}>
+                <Select value={newCampaign.type} onValueChange={(value: 'promotion' | 'newsletter' | 'survey') => setNewCampaign({ ...newCampaign, type: value })}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select campaign type" />
                   </SelectTrigger>

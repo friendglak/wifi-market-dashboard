@@ -10,9 +10,13 @@ export const ConversionChart = () => {
     { name: 'Lead Captured', value: 18, color: '#c084fc' }
   ];
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: {
+    active?: boolean;
+    payload?: Array<{ value: number }>;
+    label?: string;
+  }) => {
     if (active && payload && payload.length) {
-      const percentage = ((payload[0].value / 100) * 100).toFixed(1);
+      const percentage = ((payload[0].value / data[0].value) * 100).toFixed(1);
       return (
         <div className="bg-white p-3 rounded-lg shadow-lg border border-slate-200">
           <p className="text-sm font-medium text-slate-900">{label}</p>
@@ -33,8 +37,8 @@ export const ConversionChart = () => {
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-          <XAxis 
-            dataKey="name" 
+          <XAxis
+            dataKey="name"
             stroke="#64748b"
             fontSize={12}
             tickLine={false}
@@ -43,15 +47,15 @@ export const ConversionChart = () => {
             textAnchor="end"
             height={80}
           />
-          <YAxis 
+          <YAxis
             stroke="#64748b"
             fontSize={12}
             tickLine={false}
             axisLine={false}
           />
           <Tooltip content={<CustomTooltip />} />
-          <Bar 
-            dataKey="value" 
+          <Bar
+            dataKey="value"
             radius={[4, 4, 0, 0]}
           >
             {data.map((entry, index) => (

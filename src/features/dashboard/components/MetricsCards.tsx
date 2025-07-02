@@ -17,7 +17,7 @@ export const MetricsCards = ({ dateRange }: MetricsCardsProps) => {
     };
 
     const multiplier = range === '30d' ? 4.2 : range === '7d' ? 1 : 0.3;
-    
+
     return {
       visitors: Math.round(baseMetrics.visitors * multiplier),
       conversions: Math.round(baseMetrics.conversions * multiplier),
@@ -87,11 +87,10 @@ export const MetricsCards = ({ dateRange }: MetricsCardsProps) => {
               <CardDescription className="text-slate-500">
                 {card.description}
               </CardDescription>
-              <span className={`text-xs font-medium px-2 py-1 rounded-full ${
-                card.changeType === 'positive' 
-                  ? 'bg-green-100 text-green-700' 
+              <span className={`text-xs font-medium px-2 py-1 rounded-full ${card.changeType === 'positive'
+                  ? 'bg-green-100 text-green-700'
                   : 'bg-red-100 text-red-700'
-              }`}>
+                }`}>
                 {card.change}
               </span>
             </div>

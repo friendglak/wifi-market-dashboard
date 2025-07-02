@@ -7,8 +7,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Wifi, ArrowLeft, Loader2 } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
-import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/features/authentication/hooks/useAuth';
+import { useToast } from '@/shared/hooks/use-toast';
 
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +34,7 @@ const Auth = () => {
 
     try {
       const { error } = await signIn(loginForm.email, loginForm.password);
-      
+
       if (error) {
         toast({
           title: "Login Failed",
@@ -61,7 +61,7 @@ const Auth = () => {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (signupForm.password !== signupForm.confirmPassword) {
       toast({
         title: "Password Mismatch",
@@ -75,7 +75,7 @@ const Auth = () => {
 
     try {
       const { error } = await signUp(signupForm.email, signupForm.password, signupForm.fullName);
-      
+
       if (error) {
         toast({
           title: "Signup Failed",
@@ -177,8 +177,8 @@ const Auth = () => {
                       className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
                     />
                   </div>
-                  <Button 
-                    type="submit" 
+                  <Button
+                    type="submit"
                     className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
                     disabled={isLoading}
                   >
@@ -243,8 +243,8 @@ const Auth = () => {
                       className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
                     />
                   </div>
-                  <Button 
-                    type="submit" 
+                  <Button
+                    type="submit"
                     className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
                     disabled={isLoading}
                   >
