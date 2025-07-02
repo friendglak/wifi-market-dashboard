@@ -22,4 +22,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-.cursorrules
+# Cursor files (but allow rules to be tracked)
+.cursor/*
